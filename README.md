@@ -46,14 +46,25 @@ SHOW GRANTS FOR replication@'%';
 
 Вносим измения в файл /etc/my.cnf
  секция [mysqld] добавляем следующие параметры:
-
-server_id = 1
+```
+server_id = 1  
 log_bin = mysql-bin
+```
 
-![рис 2_2](https://github.com/ysatii/DB-HW6/blob/main/img/image2_2.jpg)
+![рис 2_2](https://github.com/ysatii/DB-HW6/blob/main/img/image2_2.jpg) 
 
-3. 
+3. перезагрузка replication-master  
+```
+sudo docker restart replication-master
+``` 
+  
+
+4. проверка стуса мастера
+docker exec -it replication-master mysql
 ![рис 2_3](https://github.com/ysatii/DB-HW6/blob/main/img/image2_3.jpg)
+
+
+
 ![рис 2_4](https://github.com/ysatii/DB-HW6/blob/main/img/image2_4.jpg)
 ![рис 2_5](https://github.com/ysatii/DB-HW6/blob/main/img/image2_5.jpg)
 ![рис 2_6](https://github.com/ysatii/DB-HW6/blob/main/img/image2_6.jpg)
