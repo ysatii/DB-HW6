@@ -81,6 +81,8 @@ relay-log = /var/lib/mysql/mysql-relay-bin
 relay-log-index = /var/lib/mysql/mysql-relay-bin.index
  read_only = 1
 ``` 
+![рис 2_5](https://github.com/ysatii/DB-HW6/blob/main/img/image2_5.jpg)
+
 6. Перезагружаем slave  
 ``` 
 sudo docker restart replication-slave
@@ -106,8 +108,35 @@ mysql> START SLAVE; (или START REPLICA;)
 mysql> SHOW SLAVE STATUS\G
 ```
 
-![рис 2_5](https://github.com/ysatii/DB-HW6/blob/main/img/image2_5.jpg)
 ![рис 2_6](https://github.com/ysatii/DB-HW6/blob/main/img/image2_6.jpg)
+
+8. проверим репликацию  
+на мастере
+```
+CREATE database world;
+SHOW databases;
+USE world;
+CREATE TABLE `city` (
+  `Name` varchar(50) NOT NULL,
+  `CountryCode` varchar(50) NOT NULL,
+  `District` varchar(50) NOT NULL,
+  `Population` int NOT NULL  
+) ENGINE=InnoDB AUTO_INCREMENT=601 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO city (Name, CountryCode, District, Population) VALUES
+('Test-Replication', 'ALB', 'Test', 42);
+```
+
+на слайф
+```
+mysql> SHOW databases;
+mysql> USE world;
+mysql> SHOW tables;
+SELECT * FROM city;
+```
+
 ![рис 2_7](https://github.com/ysatii/DB-HW6/blob/main/img/image2_7.jpg)
 ![рис 2_8](https://github.com/ysatii/DB-HW6/blob/main/img/image2_8.jpg)
+
+Базу и таблицы в ней создаем на мастер, выборку данных делаем на слайф, реапликация работает
  
