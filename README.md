@@ -111,7 +111,7 @@ mysql> SHOW SLAVE STATUS\G
 ![рис 2_6](https://github.com/ysatii/DB-HW6/blob/main/img/image2_6.jpg)
 
 8. проверим репликацию  
-на мастере
+ на replication-master  
 ```
 CREATE database world;
 SHOW databases;
@@ -127,7 +127,7 @@ INSERT INTO city (Name, CountryCode, District, Population) VALUES
 ('Test-Replication', 'ALB', 'Test', 42);
 ```
 
-на слайф
+на replication-slave  
 ```
 mysql> SHOW databases;
 mysql> USE world;
