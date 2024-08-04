@@ -51,7 +51,7 @@ server_id = 1
 log_bin = mysql-bin
 ```
 
-![рис 2_2](https://github.com/ysatii/DB-HW6/blob/main/img/image2_2.jpg) 
+![рис 2_2](https://github.com/ysatii/DB-HW6/blob/main/img/image2_2.pg) 
 
 3. перезагрузка replication-master  
 ```
