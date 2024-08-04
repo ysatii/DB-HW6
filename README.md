@@ -51,21 +51,61 @@ server_id = 1
 log_bin = mysql-bin
 ```
 
-![рис 2_2](https://github.com/ysatii/DB-HW6/blob/main/img/image2_2.pg) 
+
 
 3. перезагрузка replication-master  
 ```
 sudo docker restart replication-master
 ``` 
-  
-
-4. проверка стуса мастера
-docker exec -it replication-master mysql
 ![рис 2_3](https://github.com/ysatii/DB-HW6/blob/main/img/image2_3.jpg)
 
+4. проверка стуса мастера
+``` 
+docker exec -it replication-master mysql
+``` 
 
+проверка статуса  
+``` 
+SHOW MASTER STATUS;
+``` 
 
 ![рис 2_4](https://github.com/ysatii/DB-HW6/blob/main/img/image2_4.jpg)
+
+
+Файл бинарного журнала mysql-bin.000001, позиция 158  
+5. на slave Открываем конфигурационный файл на Slave /etc/my.cnf.  
+``` 
+log_bin = mysql-bin
+server_id = 2
+relay-log = /var/lib/mysql/mysql-relay-bin
+relay-log-index = /var/lib/mysql/mysql-relay-bin.index
+ read_only = 1
+``` 
+6. Перезагружаем slave  
+``` 
+sudo docker restart replication-slave
+``` 
+
+7. подлючаемся
+```
+docker exec -it replication-slave mysql
+```
+
+добавляем настройки
+```
+CHANGE MASTER TO
+MASTER_HOST='replication-master',
+MASTER_USER='replication',
+MASTER_LOG_FILE='mysql-bin.000001',
+MASTER_LOG_POS=158;
+```
+
+Запускаем репликацию  
+```
+mysql> START SLAVE; (или START REPLICA;)
+mysql> SHOW SLAVE STATUS\G
+```
+
 ![рис 2_5](https://github.com/ysatii/DB-HW6/blob/main/img/image2_5.jpg)
 ![рис 2_6](https://github.com/ysatii/DB-HW6/blob/main/img/image2_6.jpg)
 ![рис 2_7](https://github.com/ysatii/DB-HW6/blob/main/img/image2_7.jpg)
